@@ -1,0 +1,47 @@
+import storage
+import stats
+from models import Book
+
+def main():
+    while True:
+        print("\n--- ТРЕКЕР ПРОЧИТАННЫХ КНИГ ---")
+        print("1. Добавить книгу\n2. Показать все книги\n3. Средняя оценка\n4. Статистика по авторам\n5. Удалить книгу\n6. Выход")
+        
+        choice = input("\nВыберите действие: ")
+
+        if choice == '1':
+            author = input("Автор: ")
+            title = input("Название: ")
+            rating = input("Оценка (1-5): ")
+            date = input("Дата прочтения: ")
+            new_book = Book(author, title, rating, date)
+            if storage.add_book_to_storage(new_book):
+                print("Книга добавлена!")
+
+        elif choice == '2':
+            books = storage.load_books()
+            for b in books:
+                print(f"[{b['author']}] '{b['title']}' - {b['rating']} (Дата: {b['date']})")
+
+        elif choice == '3':
+            books = storage.load_books()
+            print(f"Средняя оценка: {stats.get_average_rating(books):.2f}")
+
+        elif choice == '4':
+            books = storage.load_books()
+            author_data = stats.get_author_stats(books)
+            for author, count in author_data.items():
+                print(f"{author}: {count} кн.")
+
+        elif choice == '5':
+            title = input("Введите название для удаления: ")
+            if storage.delete_book_from_storage(title):
+                print("Удалено.")
+            else:
+                print("Не найдено.")
+
+        elif choice == '6':
+            break
+
+if __name__ == "__main__":
+    main()
