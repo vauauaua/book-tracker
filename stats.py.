@@ -1,0 +1,12 @@
+def get_average_rating(books):
+    if not books:
+        return 0
+    total = sum(book['rating'] for book in books)
+    return total / len(books)
+
+def get_author_stats(books):
+    stats = {}
+    for book in books:
+        author = book['author']
+        stats[author] = stats.get(author, 0) + 1
+    return stats
