@@ -1,0 +1,14 @@
+class Book:
+    def __init__(self, author, title, rating, date):
+        self.author = author
+        self.title = title
+        self.rating = int(rating)
+        self.date = date
+
+    def to_dict(self):
+        return {
+            "author": self.author,
+            "title": self.title,
+            "rating": self.rating,
+            "date": self.date
+        }
